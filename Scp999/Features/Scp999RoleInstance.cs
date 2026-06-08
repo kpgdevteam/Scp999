@@ -1,6 +1,8 @@
+using CustomAbilityLib.API;
 using CustomPlayerEffects;
 using CustomRoleLib.API;
 using CustomRoleLib.API.DefaultComponents.Generic;
+using Scp999.Features.Abilities;
 
 namespace Scp999.Features;
 
@@ -22,5 +24,9 @@ public class Scp999RoleInstance : RoleInstanceBase, IInitializable
             Scp999.Singleton.Config.SpawnBroadcast,
             Scp999.Singleton.Config.SpawnBroadcastDuration
         );
+
+        CustomAbilityManager.TryGiveAbility<Scp999WaveAbility>(Owner);
+        CustomAbilityManager.TryGiveAbility<Scp999HealAbility>(Owner);
+        CustomAbilityManager.TryGiveAbility<Scp999DanceAbility>(Owner);
     }
 }

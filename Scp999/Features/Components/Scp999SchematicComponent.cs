@@ -19,15 +19,16 @@ public class Scp999SchematicComponent : ComponentBase<Scp999RoleInstance>
     private readonly Dictionary<Scp999RoleInstance, SchematicObject> _schematics = new();
     private readonly Dictionary<Scp999RoleInstance, CoroutineHandle> _coroutines = new();
 
-    public override void SubscribeEvents(Scp999RoleInstance instance)
+    public override void OnCreatedInstance(Scp999RoleInstance instance)
     {
         var schematic = ObjectSpawner.SpawnSchematic(SchematicName, PositionOffset, Quaternion.identity);
         if (schematic == null) return;
         
         schematic.transform.SetParent(instance.Owner.GameObject!.transform, false);
+        PlayerSchematics[instance.Owner] = schematic;
     }
 
-    public override void UnsubscribeEvents(Scp999RoleInstance instance)
+    public override void OnDestroyedInstance(Scp999RoleInstance instance)
     {
         if (_coroutines.TryGetValue(instance, out var handle))
         {
