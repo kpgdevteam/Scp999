@@ -5,6 +5,7 @@
         <AssemblyName>Scp999</AssemblyName>
         <RootNamespace>Scp999</RootNamespace>
         <LangVersion>latest</LangVersion>
+        <DebugType>embedded</DebugType>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PlatformTarget>x64</PlatformTarget>
         <Platforms>x64</Platforms>

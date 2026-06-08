@@ -25,7 +25,7 @@ public class Scp999WaveAbilityInstance : AbilityInstanceBase
     {
         response = null;
         Scp999SchematicComponent.PlayAnimation(Owner, "HelloAnimation");
-        Owner.EnableEffect<Ensnared>(duration: 5f);
+        Owner.EnableEffect<Ensnared>(duration: 3.5f);
         return true;
     }
 }

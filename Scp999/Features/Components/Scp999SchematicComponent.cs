@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using CustomRoleLib.API;
 using CustomRoleLib.API.DefaultComponents;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -9,59 +11,42 @@ using UnityEngine;
 
 namespace Scp999.Features.Components;
 
+public interface ISchematic
+{
+    public SchematicObject Schematic { get; set; }
+}
+
 public class Scp999SchematicComponent : ComponentBase<Scp999RoleInstance>
 {
     private const string SchematicName = "SCP999";
     private static readonly Vector3 PositionOffset = new(0f, -0.75f, 0f);
-
-    public static readonly Dictionary<Player, SchematicObject> PlayerSchematics = new();
-
-    private readonly Dictionary<Scp999RoleInstance, SchematicObject> _schematics = new();
-    private readonly Dictionary<Scp999RoleInstance, CoroutineHandle> _coroutines = new();
+    private static ICustomRole<Scp999RoleInstance> Scp999Role => CustomRoleManager.TryGetRole<Scp999RoleInstance>(ObjectNamespace.Get("scp999:scp999"), out var role) ? role : throw new Exception("Could not find SCP-999 role.");
 
     public override void OnCreatedInstance(Scp999RoleInstance instance)
     {
-        var schematic = ObjectSpawner.SpawnSchematic(SchematicName, PositionOffset, Quaternion.identity);
-        if (schematic == null) return;
-        
-        schematic.transform.SetParent(instance.Owner.GameObject!.transform, false);
-        PlayerSchematics[instance.Owner] = schematic;
+        if (instance.Schematic != null)
+        {
+            try { instance.Schematic.Destroy(); }
+            catch (NullReferenceException) {}
+        }
+        instance.Schematic = ObjectSpawner.SpawnSchematic(SchematicName, PositionOffset, Quaternion.identity);
+        if (instance.Schematic == null) return;
+
+        instance.Schematic.transform.SetParent(instance.Owner.GameObject!.transform, false);
     }
 
     public override void OnDestroyedInstance(Scp999RoleInstance instance)
     {
-        if (_coroutines.TryGetValue(instance, out var handle))
-        {
-            Timing.KillCoroutines(handle);
-            _coroutines.Remove(instance);
-        }
+        if (instance.Schematic == null) return;
 
-        if (_schematics.TryGetValue(instance, out var schematic))
-        {
-            if (schematic != null)
-                NetworkServer.Destroy(schematic.gameObject);
-            _schematics.Remove(instance);
-        }
-
-        PlayerSchematics.Remove(instance.Owner);
+        try { instance.Schematic.Destroy(); }
+        catch (NullReferenceException) {}
     }
 
     public static void PlayAnimation(Player player, string animationName)
     {
-        if (PlayerSchematics.TryGetValue(player, out var schematic) && schematic != null)
-            schematic.GetComponentInChildren<Animator>()?.Play(animationName);
-    }
-
-    private IEnumerator<float> FollowPlayer(Scp999RoleInstance instance)
-    {
-        while (_schematics.TryGetValue(instance, out var schematic) && schematic != null && instance.Owner != null)
-        {
-            var yaw = instance.Owner.ReferenceHub.transform.eulerAngles.y;
-            schematic.transform.SetPositionAndRotation(
-                instance.Owner.Position + PositionOffset,
-                Quaternion.Euler(0f, yaw, 0f)
-            );
-            yield return Timing.WaitForOneFrame;
-        }
+        if (!Scp999Role.Check(player, out var instanceU) || instanceU is not Scp999RoleInstance instance) return;
+        if (instance.Schematic == null) return;
+        instance.Schematic.GetComponentInChildren<Animator>()?.Play(animationName);
     }
 }

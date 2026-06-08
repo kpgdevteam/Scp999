@@ -2,11 +2,13 @@ using CustomAbilityLib.API;
 using CustomPlayerEffects;
 using CustomRoleLib.API;
 using CustomRoleLib.API.DefaultComponents.Generic;
+using ProjectMER.Features.Objects;
 using Scp999.Features.Abilities;
+using Scp999.Features.Components;
 
 namespace Scp999.Features;
 
-public class Scp999RoleInstance : RoleInstanceBase, IInitializable
+public class Scp999RoleInstance : RoleInstanceBase, IInitializable, ISchematic
 {
     public void OnInitialized()
     {
@@ -29,4 +31,6 @@ public class Scp999RoleInstance : RoleInstanceBase, IInitializable
         CustomAbilityManager.TryGiveAbility<Scp999HealAbility>(Owner);
         CustomAbilityManager.TryGiveAbility<Scp999DanceAbility>(Owner);
     }
+
+    public SchematicObject Schematic { get; set; }
 }
