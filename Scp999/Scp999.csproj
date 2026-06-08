@@ -33,7 +33,6 @@
     <ItemGroup>
         <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all"/>
         <PackageReference Include="Lib.Harmony" Version="2.2.2"/>
-        <PackageReference Include="Omega3065.ComponentBasedCustomRoleAPI" Version="0.0.0.1" />
         <PackageReference Include="System.Net.Http" Version="4.3.4"/>
         <PackageReference Include="System.Text.Json" Version="10.0.8"/>
         <PackageReference Include="YamlDotNet" Version="11.0.1"/>
@@ -48,6 +47,9 @@
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
           <HintPath>..\..\depo\Assembly-CSharp-firstpass.dll</HintPath>
+        </Reference>
+        <Reference Include="CBCR-Api">
+          <HintPath>..\..\..\Downloads\CBCR-Api_RaCustomMenu.dll</HintPath>
         </Reference>
         <Reference Include="CommandSystem.Core">
           <HintPath>..\..\depo\CommandSystem.Core.dll</HintPath>

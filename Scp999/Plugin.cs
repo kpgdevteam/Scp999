@@ -42,7 +42,7 @@ public class Scp999 : Plugin<Config>
     {
         Singleton = this;
         CustomRoleManager.RegisterAllRoles(typeof(Scp999Role).Assembly);
-        CustomRoleManager.TryGetRole(RoleNamespace.Get(RoleNamespaceKey), out var role);
+        CustomRoleManager.TryGetRole(ObjectNamespace.Get(RoleNamespaceKey), out var role);
         Role = role;
 
         CustomSpawnManager.SetGroupMaxTokens(RoleNamespaceKey, 1);
