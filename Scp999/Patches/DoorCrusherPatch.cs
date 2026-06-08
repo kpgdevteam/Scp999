@@ -1,9 +1,9 @@
 using HarmonyLib;
 using Interactables.Interobjects.DoorUtils;
+using LabApi.Features.Wrappers;
 using Mirror;
 using PlayerRoles;
 using PlayerStatsSystem;
-using UncomplicatedCustomRoles.Extensions;
 using UnityEngine;
 
 namespace Scp999.Patches;
@@ -12,20 +12,21 @@ namespace Scp999.Patches;
 public class DoorCrusherPatch
 {
     [HarmonyPrefix]
-    public bool OnTriggerEnter(DoorCrusherExtension __instance, Collider other)
+    public static bool OnTriggerEnter(DoorCrusherExtension __instance, Collider other)
     {
-        ReferenceHub hub;
-        if (!NetworkServer.active || !ReferenceHub.TryGetHub(other.transform.root.gameObject, out hub))
+        if (!NetworkServer.active || !ReferenceHub.TryGetHub(other.transform.root.gameObject, out var hub))
             return false;
+
+        var player = Player.Get(hub);
         var currentRole = hub.roleManager.CurrentRole;
 
-        if ((hub.TryGetSummonedInstance(out var role) && role.Role.Id == 999) ||
-            currentRole.RoleTypeId == RoleTypeId.Scp106)
+        if ((player != null && Scp999.Role?.Check(player) == true) || currentRole.RoleTypeId == RoleTypeId.Scp106)
             return false;
 
         var flag = hub.GetTeam() == Team.SCPs;
         if (__instance.IgnoreScps & flag)
             return false;
+
         var damage = flag ? __instance.ScpCrushDamage : -1f;
         hub.playerStats.DealDamage(new UniversalDamageHandler(damage, DeathTranslations.Crushed));
         return false;
