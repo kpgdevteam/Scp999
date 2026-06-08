@@ -21,15 +21,10 @@ public class Scp999SchematicComponent : ComponentBase<Scp999RoleInstance>
 
     public override void SubscribeEvents(Scp999RoleInstance instance)
     {
-        var schematic = ObjectSpawner.SpawnSchematic(SchematicName, instance.Owner.Position + PositionOffset, Quaternion.identity);
+        var schematic = ObjectSpawner.SpawnSchematic(SchematicName, PositionOffset, Quaternion.identity);
         if (schematic == null) return;
-
-        foreach (var nb in schematic.GetComponentsInChildren<NetworkBehaviour>(true))
-            nb.syncInterval = 0f;
-
-        _schematics[instance] = schematic;
-        PlayerSchematics[instance.Owner] = schematic;
-        _coroutines[instance] = Timing.RunCoroutine(FollowPlayer(instance), Segment.LateUpdate);
+        
+        schematic.transform.SetParent(instance.Owner.GameObject!.transform, false);
     }
 
     public override void UnsubscribeEvents(Scp999RoleInstance instance)
