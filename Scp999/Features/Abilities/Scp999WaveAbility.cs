@@ -24,7 +24,9 @@ public class Scp999WaveAbilityInstance : AbilityInstanceBase
     public override bool Execute(out string response)
     {
         response = null;
+        var clipName = Random.Range(0, 2) == 0 ? "hello" : "hi";
         Scp999SchematicComponent.PlayAnimation(Owner, "HelloAnimation");
+        Scp999AudioComponent.PlaySound(Owner, clipName);
         Owner.EnableEffect<Ensnared>(duration: 3.5f);
         return true;
     }

@@ -11,6 +11,7 @@ namespace Scp999.Features;
 [CustomRoleAttributeBase(typeof(InitializerComponent<Scp999RoleInstance>))]
 [CustomRoleAttributeBase(typeof(Scp999BehaviorComponent))]
 [CustomRoleAttributeBase(typeof(Scp999SchematicComponent))]
+[CustomRoleAttributeBase(typeof(Scp999AudioComponent))]
 [CustomRoleAttributeBase(typeof(RoleNameDisplayComponent))]
 [CustomRoleAttributeBase(typeof(RoleReceivedHintComponent))]
 public class Scp999Role : CustomRoleBase<Scp999RoleInstance>

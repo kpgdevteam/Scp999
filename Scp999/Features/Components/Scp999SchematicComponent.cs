@@ -11,11 +11,6 @@ using UnityEngine;
 
 namespace Scp999.Features.Components;
 
-public interface ISchematic
-{
-    public SchematicObject Schematic { get; set; }
-}
-
 public class Scp999SchematicComponent : ComponentBase<Scp999RoleInstance>
 {
     private const string SchematicName = "SCP999";

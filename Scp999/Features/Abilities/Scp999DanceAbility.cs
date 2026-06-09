@@ -31,6 +31,13 @@ public class Scp999DanceAbilityInstance : AbilityInstanceBase
             <= 90 => "FunAnimation3",
             _ => "FunAnimation4"
         };
+        var clipName = rand switch
+        {
+            <= 15 => "circus",
+            <= 60 => "funnytoy",
+            <= 90 => "funnytoy",
+            _ => "uwu"
+        };
         Scp999SchematicComponent.PlayAnimation(Owner, animName);
         return true;
     }

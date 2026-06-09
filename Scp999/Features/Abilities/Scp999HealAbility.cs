@@ -24,6 +24,7 @@ public class Scp999HealAbilityInstance : AbilityInstanceBase
     {
         response = null;
         Scp999SchematicComponent.PlayAnimation(Owner, "HealthAnimation");
+        Scp999AudioComponent.PlaySound(Owner, "health");
         foreach (var target in Player.GetAll())
         {
             if (target == Owner || target.IsSCP) continue;

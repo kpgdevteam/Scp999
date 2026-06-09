@@ -20,4 +20,7 @@ public class Config
 
     [Description("How long (seconds) the spawn broadcast is shown.")]
     public ushort SpawnBroadcastDuration { get; set; } = 10;
+
+    [Description("A folder under ~/.config/SCPSL/LabAPI/configs/{port}/Scp999/ where all clips should be cached.")]
+    public string ShortClipsPath { get; set; } = "Audio/";
 }

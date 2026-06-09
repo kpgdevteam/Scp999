@@ -21,6 +21,7 @@ public class Scp999BehaviorComponent : ComponentBase<Scp999RoleInstance>
         PlayerEvents.Hurting += GetLabEvent<PlayerHurtingEventArgs>(instance, OnPlayerHurting);
         PlayerEvents.EnteringPocketDimension += GetLabEvent<PlayerEnteringPocketDimensionEventArgs>(instance, OnEnteringPocketDimension);
         PlayerEvents.Cuffing += GetLabEvent<PlayerCuffingEventArgs>(instance, OnPlayerCuffing);
+        PlayerEvents.Jumped += GetLabEvent<PlayerJumpedEventArgs>(instance, OnPlayerJumped);
         Scp096Events.AddingTarget += GetLabEvent<Scp096AddingTargetEventArgs>(instance, OnScp096AddingTarget);
         Scp049Events.ResurrectingBody += GetLabEvent<Scp049ResurrectingBodyEventArgs>(instance, OnScp049ResurrectingBody);
         Scp049Events.UsingSense += GetLabEvent<Scp049UsingSenseEventArgs>(instance, OnScp049UsingSense);
@@ -37,11 +38,18 @@ public class Scp999BehaviorComponent : ComponentBase<Scp999RoleInstance>
         PlayerEvents.Hurting -= GetLabEvent<PlayerHurtingEventArgs>(instance, OnPlayerHurting);
         PlayerEvents.EnteringPocketDimension -= GetLabEvent<PlayerEnteringPocketDimensionEventArgs>(instance, OnEnteringPocketDimension);
         PlayerEvents.Cuffing -= GetLabEvent<PlayerCuffingEventArgs>(instance, OnPlayerCuffing);
+        PlayerEvents.Jumped -= GetLabEvent<PlayerJumpedEventArgs>(instance, OnPlayerJumped);
         Scp096Events.AddingTarget -= GetLabEvent<Scp096AddingTargetEventArgs>(instance, OnScp096AddingTarget);
         Scp049Events.ResurrectingBody -= GetLabEvent<Scp049ResurrectingBodyEventArgs>(instance, OnScp049ResurrectingBody);
         Scp049Events.UsingSense -= GetLabEvent<Scp049UsingSenseEventArgs>(instance, OnScp049UsingSense);
         Scp173Events.AddingObserver -= GetLabEvent<Scp173AddingObserverEventArgs>(instance, OnScp173AddingObserver);
         Scp3114Events.StrangleStarting -= GetLabEvent<Scp3114StrangleStartingEventArgs>(instance, OnScp3114StrangleStarting);
+    }
+
+    private void OnPlayerJumped(PlayerJumpedEventArgs ev, Scp999RoleInstance instance)
+    {
+        if (ev.Player != instance.Owner) return;
+        Scp999AudioComponent.PlayJumpSound(ev.Player);
     }
 
     private void OnSearchingPickup(PlayerSearchingPickupEventArgs ev, Scp999RoleInstance instance)

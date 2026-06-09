@@ -1,9 +1,15 @@
 using System;
+using System.IO;
 using CustomAbilityLib.API;
 using CustomRoleLib.API;
 using LabApi.Features;
+using LabApi.Loader;
 using LabApi.Loader.Features.Plugins;
 using Scp999.Features;
+using SecretLabNAudio.Core.FileReading;
+using SecretLabNAudio.FFmpeg.Extensions;
+using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 
 namespace Scp999;
 
@@ -34,6 +40,9 @@ public class Scp999 : Plugin<Config>
             RoleNamespaceKey,
             CustomSpawnManager.TokenResetType.RoundRestart
         );
+
+        var cachePath = Path.Combine(this.GetConfigDirectory().FullName, Config.ShortClipsPath);
+        ShortClipCache.AddAllFromDirectoryWithFFmpeg(cachePath);
     }
 
     public override void Disable()
