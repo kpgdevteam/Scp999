@@ -1,3 +1,4 @@
+using CustomRoleLib;
 using CustomRoleLib.API;
 using CustomRoleLib.API.Attributes;
 using CustomRoleLib.API.DefaultComponents;
@@ -14,6 +15,7 @@ namespace Scp999.Features;
 [CustomRoleAttributeBase(typeof(Scp999AudioComponent))]
 [CustomRoleAttributeBase(typeof(RoleNameDisplayComponent))]
 [CustomRoleAttributeBase(typeof(RoleReceivedHintComponent))]
+[CustomSpawnpointRole<Scp999RoleInstance>(RoleTypeId.ClassD)]
 public class Scp999Role : CustomRoleBase<Scp999RoleInstance>
 {
     public override string Name => "SCP-999";
