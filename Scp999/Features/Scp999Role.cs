@@ -23,8 +23,8 @@ public class Scp999Role : CustomRoleBase<Scp999RoleInstance>
     public override string Id => "scp999";
 
     public override bool NaturallySpawnable => true;
-    public override float RoleSpawnWeight => 5f;
-    public override float RoleNotSpawnWeight => 95f;
+    public override float RoleSpawnWeight => Scp999.Singleton.Config.Scp999SpawnWeight;
+    public override float RoleNotSpawnWeight => Scp999.Singleton.Config.NotSpawnWeight;
 
     public override RoleTypeId[] RoleSpawnOriginalRoleIds =>
         [RoleTypeId.FacilityGuard, RoleTypeId.Scientist, RoleTypeId.ClassD];

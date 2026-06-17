@@ -23,4 +23,10 @@ public class Config
 
     [Description("A folder under ~/.config/SCPSL/LabAPI/configs/{port}/Scp999/ where all clips should be cached.")]
     public string ShortClipsPath { get; set; } = "Audio/";
+
+    [Description("Make this higher for more spawns!")]
+    public float Scp999SpawnWeight { get; set; } = 1f;
+
+    [Description("Make this higher for LESS spawns!")]
+    public float NotSpawnWeight { get; set; } = 4f;
 }
